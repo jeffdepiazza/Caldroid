@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.caldroid.R;
@@ -40,7 +41,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected DateTime maxDateTime;
 	protected DateTime today;
 	protected int startDayOfWeek;
+	protected boolean sixWeeksInCalendar;
 	protected Resources resources;
+	protected GridView mGv;  // added by me to test out the whole 'measure to fit for the date grid
 
 	/**
 	 * caldroidData belongs to Caldroid
@@ -55,7 +58,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		this.month = dateTime.getMonth();
 		this.year = dateTime.getYear();
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
-				startDayOfWeek);
+				startDayOfWeek, sixWeeksInCalendar);
 	}
 
 	// GETTERS AND SETTERS
@@ -167,9 +170,11 @@ public class CaldroidGridAdapter extends BaseAdapter {
 				.get(CaldroidFragment._MAX_DATE_TIME);
 		startDayOfWeek = (Integer) caldroidData
 				.get(CaldroidFragment.START_DAY_OF_WEEK);
+		sixWeeksInCalendar = (Boolean) caldroidData
+				.get(CaldroidFragment.SIX_WEEKS_IN_CALENDAR);
 
 		this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
-				startDayOfWeek);
+				startDayOfWeek, sixWeeksInCalendar);
 	}
 
 	protected DateTime getToday() {
@@ -180,7 +185,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void setCustomResources(DateTime dateTime, TextView textView) {
+	protected void setCustomResources(DateTime dateTime, View backgroundView,
+			TextView textView) {
 		// Set custom background resource
 		HashMap<DateTime, Integer> backgroundForDateTimeMap = (HashMap<DateTime, Integer>) caldroidData
 				.get(CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP);
@@ -190,7 +196,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 			// Set it
 			if (backgroundResource != null) {
-				textView.setBackgroundResource(backgroundResource.intValue());
+				backgroundView.setBackgroundResource(backgroundResource
+						.intValue());
 			}
 		}
 
@@ -277,9 +284,10 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		}
 
 		cellView.setText("" + dateTime.getDay());
-
+		//Log.v("current month", "" + month);
+		//Log.v("current date drawing", "" + dateTime.getDay());
 		// Set custom color if required
-		setCustomResources(dateTime, cellView);
+		setCustomResources(dateTime, cellView, cellView);
 	}
 
 	@Override
@@ -311,9 +319,20 @@ public class CaldroidGridAdapter extends BaseAdapter {
 			cellView = (TextView) inflater.inflate(R.layout.date_cell, null);
 		}
 
+		// custom code here
+		//Log.v("GridView ", "" + mGv.getHeight());
+		//AbsListView.LayoutParams param = new AbsListView.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,  mGv.getHeight()/5);
+		//cellView.setLayoutParams(param);
+		
 		customizeTextView(position, cellView);
-
+		//Log.v("Current cell position drawing", "" + position);
 		return cellView;
 	}
 
+	public void recieveGridView (GridView inbound) {
+		
+		this.mGv = inbound;
+		
+	}
+	
 }

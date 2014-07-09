@@ -1,5 +1,6 @@
 package com.roomorama.caldroid;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.view.View;
@@ -20,8 +21,9 @@ public abstract class CaldroidListener {
 	 * @param date
 	 * @param view
 	 */
-	public abstract void onSelectDate(Date date, View view);
-
+	public void onSelectDate(Calendar date, View view){
+		// Do nothing
+	}
 	
 	/**
 	 * Inform client user has long clicked on a date

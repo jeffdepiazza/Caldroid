@@ -63,6 +63,7 @@ public class DateGridFragment extends Fragment {
 		// Client normally needs to provide the adapter and onItemClickListener
 		// before the fragment is attached to avoid complex crash due to
 		// fragment life cycles
+		
 		if (gridAdapter != null) {
 			gridView.setAdapter(gridAdapter);
 		}
@@ -76,4 +77,9 @@ public class DateGridFragment extends Fragment {
 		return gridView;
 	}
 
+	public GridView sendGridView(){
+		
+		return gridView;
+		
+	}
 }
