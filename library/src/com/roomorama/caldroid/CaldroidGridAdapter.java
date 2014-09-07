@@ -9,11 +9,13 @@ import java.util.HashMap;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.caldroid.R;
@@ -193,11 +195,12 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		if (backgroundForDateTimeMap != null) {
 			// Get background resource for the dateTime
 			Integer backgroundResource = backgroundForDateTimeMap.get(dateTime);
-
 			// Set it
 			if (backgroundResource != null) {
 				backgroundView.setBackgroundResource(backgroundResource
 						.intValue());
+			backgroundView.findViewById(R.id.calendar_kettlebell).setVisibility(View.VISIBLE);
+			
 			}
 		}
 
@@ -207,7 +210,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		if (textColorForDateTimeMap != null) {
 			// Get textColor for the dateTime
 			Integer textColorResource = textColorForDateTimeMap.get(dateTime);
-
 			// Set it
 			if (textColorResource != null) {
 				textView.setTextColor(resources.getColor(textColorResource
@@ -225,7 +227,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	 * @param position
 	 * @param cellView
 	 */
-	protected void customizeTextView(int position, TextView cellView) {
+	protected void customizeTextView(int position, TextView cellView, View convertView ) {
 		cellView.setTextColor(Color.BLACK);
 
 		// Get dateTime of this cell
@@ -239,7 +241,6 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 		boolean shouldResetDiabledView = false;
 		boolean shouldResetSelectedView = false;
-
 		// Customize for disabled dates and date outside min/max dates
 		if ((minDateTime != null && dateTime.lt(minDateTime))
 				|| (maxDateTime != null && dateTime.gt(maxDateTime))
@@ -287,7 +288,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		//Log.v("current month", "" + month);
 		//Log.v("current date drawing", "" + dateTime.getDay());
 		// Set custom color if required
-		setCustomResources(dateTime, cellView, cellView);
+		setCustomResources(dateTime, convertView, cellView);
 	}
 
 	@Override
@@ -310,23 +311,24 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		TextView cellView;
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		TextView cellView = (TextView) convertView;
 
 		// For reuse
 		if (convertView == null) {
-			cellView = (TextView) inflater.inflate(R.layout.date_cell, null);
+			convertView = inflater.inflate(R.layout.date_cell, null);
+			
 		}
-
+		cellView = (TextView) convertView.findViewById(R.id.calendar_tv);
 		// custom code here
 		//Log.v("GridView ", "" + mGv.getHeight());
 		//AbsListView.LayoutParams param = new AbsListView.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,  mGv.getHeight()/5);
 		//cellView.setLayoutParams(param);
 		
-		customizeTextView(position, cellView);
+		customizeTextView(position, cellView, convertView);
 		//Log.v("Current cell position drawing", "" + position);
-		return cellView;
+		return convertView;
 	}
 
 	public void recieveGridView (GridView inbound) {
