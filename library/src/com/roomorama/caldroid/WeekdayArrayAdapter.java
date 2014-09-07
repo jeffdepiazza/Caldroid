@@ -15,7 +15,7 @@ import android.widget.TextView;
  * Customize the weekday gridview
  */
 public class WeekdayArrayAdapter extends ArrayAdapter<String> {
-	public static int textColor = Color.LTGRAY;
+	public static int textColor = Color.BLACK;
 
 	public WeekdayArrayAdapter(Context context, int textViewResourceId,
 			List<String> objects) {

@@ -924,7 +924,7 @@ public class CaldroidFragment extends DialogFragment {
 		monthYearStringBuilder.setLength(0);
 		String monthTitle = DateUtils.formatDateRange(getActivity(),
 				monthYearFormatter, millis, millis, MONTH_YEAR_FLAG).toString();
-
+		monthTitleTextView.setTextColor(Color.BLACK);
 		monthTitleTextView.setText(monthTitle);
 	}
 
