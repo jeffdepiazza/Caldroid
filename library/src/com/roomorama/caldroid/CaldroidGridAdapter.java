@@ -45,7 +45,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	protected int startDayOfWeek;
 	protected boolean sixWeeksInCalendar;
 	protected Resources resources;
-	protected GridView mGv;  // added by me to test out the whole 'measure to fit for the date grid
+	protected GridView mGv; // added by me to test out the whole 'measure to fit
+							// for the date grid
 
 	/**
 	 * caldroidData belongs to Caldroid
@@ -199,8 +200,12 @@ public class CaldroidGridAdapter extends BaseAdapter {
 			if (backgroundResource != null) {
 				backgroundView.setBackgroundResource(backgroundResource
 						.intValue());
-			backgroundView.findViewById(R.id.calendar_kettlebell).setVisibility(View.VISIBLE);
-			
+				backgroundView.findViewById(R.id.calendar_kettlebell)
+						.setVisibility(View.VISIBLE);
+
+			} else {
+				backgroundView.findViewById(R.id.calendar_kettlebell)
+						.setVisibility(View.GONE);
 			}
 		}
 
@@ -227,7 +232,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 	 * @param position
 	 * @param cellView
 	 */
-	protected void customizeTextView(int position, TextView cellView, View convertView ) {
+	protected void customizeTextView(int position, TextView cellView,
+			View convertView) {
 		cellView.setTextColor(Color.BLACK);
 
 		// Get dateTime of this cell
@@ -285,8 +291,8 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		}
 
 		cellView.setText("" + dateTime.getDay());
-		//Log.v("current month", "" + month);
-		//Log.v("current date drawing", "" + dateTime.getDay());
+		// Log.v("current month", "" + month);
+		// Log.v("current date drawing", "" + dateTime.getDay());
 		// Set custom color if required
 		setCustomResources(dateTime, convertView, cellView);
 	}
@@ -318,23 +324,25 @@ public class CaldroidGridAdapter extends BaseAdapter {
 		// For reuse
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.date_cell, null);
-			
+
 		}
 		cellView = (TextView) convertView.findViewById(R.id.calendar_tv);
 		// custom code here
-		//Log.v("GridView ", "" + mGv.getHeight());
-		//AbsListView.LayoutParams param = new AbsListView.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,  mGv.getHeight()/5);
-		//cellView.setLayoutParams(param);
-		
+		// Log.v("GridView ", "" + mGv.getHeight());
+		// AbsListView.LayoutParams param = new
+		// AbsListView.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+		// mGv.getHeight()/5);
+		// cellView.setLayoutParams(param);
+
 		customizeTextView(position, cellView, convertView);
-		//Log.v("Current cell position drawing", "" + position);
+		// Log.v("Current cell position drawing", "" + position);
 		return convertView;
 	}
 
-	public void recieveGridView (GridView inbound) {
-		
+	public void recieveGridView(GridView inbound) {
+
 		this.mGv = inbound;
-		
+
 	}
-	
+
 }
